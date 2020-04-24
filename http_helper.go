@@ -15,7 +15,7 @@ func FixURL(url string) string {
 
 func CallHTTP(url string) []byte {
 	// Request with get method
-	resp, err := http.Get(FixURL(url))
+	resp, err := http.Get(url)
 	if err != nil {
 		panic("Couldn't get response with error: " + err.Error())
 	}

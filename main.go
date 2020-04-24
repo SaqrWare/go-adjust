@@ -42,6 +42,7 @@ func main() {
 func RunOne(url string, wg *sync.WaitGroup, limitChan *chan struct{}) {
 	defer wg.Done()
 	*limitChan <- struct{}{}
+	url = FixURL(url)
 	hash := FetchAndHash(url)
 	fmt.Printf("%v %v\n", url, hash)
 	<-*limitChan
