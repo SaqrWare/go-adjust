@@ -15,9 +15,15 @@ func main() {
 	ParallelValue = ParseParallelFlag()
 
 	// Get urls from cli args
-	urls := FixURLs(ListParams())
+	urls := ListParams()
 
 	// Limit parallel requests
+	/* This examples limits the parallel concurrnt requests using a buffered channel
+	whn the buffer is full, it blocks go routine, till it releases.
+	*/
+	/* We can also control number of parallel requests by dividing url array into n of arrays
+	, n is the parallel requests and each array run in seperate go routine.
+	*/
 	var maxGoroutines int
 	if ParallelValue != 0 {
 		maxGoroutines = ParallelValue
@@ -28,16 +34,20 @@ func main() {
 
 	for _, url := range urls {
 		wg.Add(1)
-		go runOne(url, &wg, &limitChan)
+		go RunOne(url, &wg, &limitChan)
 	}
 	wg.Wait()
 }
 
-func runOne(url string, wg *sync.WaitGroup, limitChan *chan struct{}) {
+func RunOne(url string, wg *sync.WaitGroup, limitChan *chan struct{}) {
 	defer wg.Done()
 	*limitChan <- struct{}{}
-	body := CallHTTP(url)
-	url, hash := HashResponse(url, body)
-	fmt.Println(url + " " + hash)
+	hash := FetchAndHash(url)
+	fmt.Printf("%v %v\n", url, hash)
 	<-*limitChan
+}
+
+func FetchAndHash(url string) string {
+	body := CallHTTP(url)
+	return HashContent(body)
 }
