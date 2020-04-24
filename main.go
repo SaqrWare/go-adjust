@@ -24,13 +24,7 @@ func main() {
 	/* We can also control number of parallel requests by dividing url array into n of arrays
 	, n is the parallel requests and each array run in seperate go routine.
 	*/
-	var maxGoroutines int
-	if ParallelValue != 0 {
-		maxGoroutines = ParallelValue
-	} else {
-		maxGoroutines = len(urls)
-	}
-	limitChan := make(chan struct{}, maxGoroutines)
+	limitChan := make(chan struct{}, ParallelValue)
 
 	for _, url := range urls {
 		wg.Add(1)

@@ -22,7 +22,7 @@ func ListParams() []string {
 }
 
 func ParseParallelFlag() int {
-	parallel := flag.Int("parallel", 0, "To set the maximum number of parallel requests.")
+	parallel := flag.Int("parallel", 10, "To set the maximum number of parallel requests.")
 	flag.Parse()
 	return *parallel
 }

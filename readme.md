@@ -1,5 +1,11 @@
-## My http Adjust task
+## HTTP Adjust task
 
+This tool is written in golang, it achieves the task goals which are
+
+- ✔️ Making http requests and prints the address of the request along with the MD5 hash of the response
+- ✔️ Ability to perform the requests in parallel so that the tool can complete sooner. T
+- ✔️ Ability to perform the requests in parallel so that the tool can complete sooner. T
+    
 #### Compile:
 
 ```bash
